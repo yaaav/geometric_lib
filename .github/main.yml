@@ -1,0 +1,27 @@
+name: Run Python Unit Tests on Push
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run unit tests (tests inside modules)
+        run: |
+          python -m unittest -v circle
+          python -m unittest -v rectangle
+          python -m unittest -v square
+          python -m unittest -v triangle
